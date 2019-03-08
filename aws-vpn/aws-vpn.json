@@ -2,7 +2,7 @@
   "__inputs": [
     {
       "name": "DS_CLOUDWATCH",
-      "label": "cludwatch",
+      "label": "cloudwatch",
       "description": "",
       "type": "datasource",
       "pluginId": "cloudwatch",
@@ -38,8 +38,8 @@
   "annotations": {
     "list": []
   },
-  "description": "Visualize AWS SES metrics",
-  "editable": true,
+  "description": "Visualize AWS VPN metrics",
+  "editable": false,
   "gnetId": 653,
   "graphTooltip": 0,
   "hideControls": true,
@@ -54,6 +54,8 @@
         {
           "aliasColors": {},
           "bars": false,
+          "dashLength": 10,
+          "dashes": false,
           "datasource": "${DS_CLOUDWATCH}",
           "editable": true,
           "error": false,
@@ -92,16 +94,9 @@
             {
               "alias": "ClientConnections_Sum",
               "yaxis": 2
-            },
-            {
-              "alias": "Delivery_Average",
-              "yaxis": 1
-            },
-            {
-              "alias": "Send_Average",
-              "yaxis": 2
             }
           ],
+          "spaceLength": 10,
           "span": 12,
           "stack": false,
           "steppedLine": false,
@@ -111,7 +106,9 @@
               "application": {
                 "filter": ""
               },
-              "dimensions": {},
+              "dimensions": {
+                "VpnId": "$vpnid"
+              },
               "functions": [],
               "group": {
                 "filter": ""
@@ -122,9 +119,9 @@
               "item": {
                 "filter": ""
               },
-              "metricName": "Send",
+              "metricName": "TunnelDataIn",
               "mode": 0,
-              "namespace": "AWS/SES",
+              "namespace": "AWS/VPN",
               "options": {
                 "showDisabledItems": false
               },
@@ -140,7 +137,9 @@
               "application": {
                 "filter": ""
               },
-              "dimensions": {},
+              "dimensions": {
+                "VpnId": "$vpnid"
+              },
               "functions": [],
               "group": {
                 "filter": ""
@@ -151,9 +150,9 @@
               "item": {
                 "filter": ""
               },
-              "metricName": "Delivery",
+              "metricName": "TunnelDataOut",
               "mode": 0,
-              "namespace": "AWS/SES",
+              "namespace": "AWS/VPN",
               "options": {
                 "showDisabledItems": false
               },
@@ -168,7 +167,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Send / Delivery",
+          "title": "TunnelDataIn / TunnelDataOut",
           "tooltip": {
             "msResolution": false,
             "shared": true,
@@ -177,6 +176,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -184,7 +184,7 @@
           },
           "yaxes": [
             {
-              "format": "none",
+              "format": "bytes",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -216,12 +216,14 @@
         {
           "aliasColors": {},
           "bars": false,
+          "dashLength": 10,
+          "dashes": false,
           "datasource": "${DS_CLOUDWATCH}",
           "editable": true,
           "error": false,
           "fill": 1,
           "grid": {},
-          "id": 8,
+          "id": 12,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -237,7 +239,7 @@
           "lines": true,
           "linewidth": 2,
           "links": [],
-          "nullPointMode": "null as zero",
+          "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
           "points": false,
@@ -252,22 +254,11 @@
               "yaxis": 2
             },
             {
-              "alias": "ClientConnections_Sum",
-              "yaxis": 2
-            },
-            {
-              "alias": "Delivery_Average",
-              "yaxis": 1
-            },
-            {
-              "alias": "Send_Average",
-              "yaxis": 2
-            },
-            {
-              "alias": "Bounce_Average",
+              "alias": "PermittedThroughput_Average",
               "yaxis": 2
             }
           ],
+          "spaceLength": 10,
           "span": 12,
           "stack": false,
           "steppedLine": false,
@@ -277,7 +268,9 @@
               "application": {
                 "filter": ""
               },
-              "dimensions": {},
+              "dimensions": {
+                "VpnId": "$vpnid"
+              },
               "functions": [],
               "group": {
                 "filter": ""
@@ -288,171 +281,9 @@
               "item": {
                 "filter": ""
               },
-              "metricName": "Bounce",
+              "metricName": "TunnelState",
               "mode": 0,
-              "namespace": "AWS/SES",
-              "options": {
-                "showDisabledItems": false
-              },
-              "period": "",
-              "refId": "A",
-              "region": "$region",
-              "statistics": [
-                "Average"
-              ]
-            },
-            {
-              "alias": "",
-              "application": {
-                "filter": ""
-              },
-              "dimensions": {},
-              "functions": [],
-              "group": {
-                "filter": ""
-              },
-              "host": {
-                "filter": ""
-              },
-              "item": {
-                "filter": ""
-              },
-              "metricName": "Reject",
-              "mode": 0,
-              "namespace": "AWS/SES",
-              "options": {
-                "showDisabledItems": false
-              },
-              "period": "",
-              "refId": "C",
-              "region": "$region",
-              "statistics": [
-                "Average"
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Bounce / Reject",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "sort": 0,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
-          "xaxis": {
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "none",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": 0,
-              "show": true
-            },
-            {
-              "format": "none",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": 0,
-              "show": true
-            }
-          ]
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": null,
-      "repeatRowId": null,
-      "showTitle": false,
-      "title": "New row",
-      "titleSize": "h6"
-    },
-    {
-      "collapse": false,
-      "height": "250px",
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "datasource": "${DS_CLOUDWATCH}",
-          "editable": true,
-          "error": false,
-          "fill": 1,
-          "grid": {},
-          "id": 9,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": true,
-            "min": true,
-            "show": true,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "null as zero",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "Latency_Average",
-              "yaxis": 2
-            },
-            {
-              "alias": "TargetResponseTime_Average",
-              "yaxis": 2
-            },
-            {
-              "alias": "ClientConnections_Sum",
-              "yaxis": 2
-            },
-            {
-              "alias": "Delivery_Average",
-              "yaxis": 1
-            },
-            {
-              "alias": "Send_Average",
-              "yaxis": 2
-            }
-          ],
-          "span": 12,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "",
-              "application": {
-                "filter": ""
-              },
-              "dimensions": {},
-              "functions": [],
-              "group": {
-                "filter": ""
-              },
-              "host": {
-                "filter": ""
-              },
-              "item": {
-                "filter": ""
-              },
-              "metricName": "Complaint",
-              "mode": 0,
-              "namespace": "AWS/SES",
+              "namespace": "AWS/VPN",
               "options": {
                 "showDisabledItems": false
               },
@@ -467,7 +298,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Complaint",
+          "title": "TunnelState",
           "tooltip": {
             "msResolution": false,
             "shared": true,
@@ -476,6 +307,7 @@
           },
           "type": "graph",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -483,7 +315,7 @@
           },
           "yaxes": [
             {
-              "format": "none",
+              "format": "short",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -491,7 +323,7 @@
               "show": true
             },
             {
-              "format": "none",
+              "format": "Bps",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -505,7 +337,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "Dashboard Row",
+      "title": "New row",
       "titleSize": "h6"
     },
     {
@@ -513,7 +345,7 @@
       "height": "25px",
       "panels": [
         {
-          "content": "<a style=\"float: right\" href=\"http://www.monitoringartist.com\" target=\"_blank\" title=\"Dashboard maintained by Monitoring Artist - DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring\"><img src=\"https://monitoringartist.github.io/monitoring-artist-logo-grafana.png\" height=\"30px\" /></a>\n<a style=\"float: left\"  target=\"_blank\" href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ses-metricscollected.html\">AWS CloudWatch SES documentation</a><br/>\n<a style=\"float: left\"  target=\"_blank\" href=\"https://grafana.com/dashboards/1519\">Installed from Grafana.com dashboards</a>\n<div style=\"clear:both; width:100%;height:0;font-size:0;\"></div>",
+          "content": "<a style=\"float: right\" href=\"http://www.monitoringartist.com\" target=\"_blank\" title=\"Dashboard maintained by Monitoring Artist - DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring\"><img src=\"https://monitoringartist.github.io/monitoring-artist-logo-grafana.png\" height=\"30px\" /></a>\n<a style=\"float: left\"  target=\"_blank\" href=\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/monitoring-cloudwatch-vpn.html\">AWS CloudWatch VPN documentation</a><br/>\n<a style=\"float: left\"  target=\"_blank\" href=\"https://grafana.com/dashboards/2969\">Installed from Grafana.com dashboards</a>\n<div style=\"clear:both; width:100%;height:0;font-size:0;\"></div>",
           "editable": true,
           "error": false,
           "id": 2,
@@ -528,7 +360,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "Dashboard Row",
+      "title": "New row",
       "titleSize": "h6"
     }
   ],
@@ -559,11 +391,31 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_CLOUDWATCH}",
+        "hide": 0,
+        "includeAll": false,
+        "label": "VpnId",
+        "multi": false,
+        "name": "vpnid",
+        "options": [],
+        "query": "dimension_values($region,AWS/VPN,TunnelState, VpnId)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -592,6 +444,6 @@
     ]
   },
   "timezone": "browser",
-  "title": "AWS SES",
-  "version": 6
+  "title": "AWS VPN",
+  "version": 2
 }

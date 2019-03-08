@@ -120,7 +120,7 @@
               },
               "period": "",
               "refId": "A",
-              "region": "$region",
+              "region": "us-east-1",
               "statistics": [
                 "Sum"
               ]
@@ -237,7 +237,7 @@
               },
               "period": "",
               "refId": "A",
-              "region": "$region",
+              "region": "us-east-1",
               "statistics": [
                 "Average"
               ]
@@ -269,7 +269,7 @@
               },
               "period": "",
               "refId": "B",
-              "region": "$region",
+              "region": "us-east-1",
               "statistics": [
                 "Average"
               ]
@@ -386,7 +386,7 @@
               },
               "period": "",
               "refId": "A",
-              "region": "$region",
+              "region": "us-east-1",
               "statistics": [
                 "Sum"
               ]
@@ -418,7 +418,7 @@
               },
               "period": "",
               "refId": "B",
-              "region": "$region",
+              "region": "us-east-1",
               "statistics": [
                 "Sum"
               ]
@@ -469,7 +469,7 @@
       "height": "25px",
       "panels": [
         {
-          "content": "<a style=\"float: right\" href=\"http://www.monitoringartist.com\" target=\"_blank\" title=\"Dashboard maintained by Monitoring Artist - DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring\"><img src=\"https://monitoringartist.github.io/monitoring-artist-logo-grafana.png\" height=\"30px\" /></a>\n<a style=\"float: left\"  target=\"_blank\" href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cf-metricscollected.html\">AWS Cloudfront documentation</a><br/>\n<a style=\"float: left\"  target=\"_blank\" href=\"https://grafana.net/dashboards/674\">Installed from Grafana.net dashboards</a>\n<div style=\"clear:both; width:100%;height:0;font-size:0;\"></div>",
+          "content": "<a style=\"float: right\" href=\"http://www.monitoringartist.com\" target=\"_blank\" title=\"Dashboard maintained by Monitoring Artist - DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring\"><img src=\"https://monitoringartist.github.io/monitoring-artist-logo-grafana.png\" height=\"30px\" /></a>\n<a style=\"float: left\"  target=\"_blank\" href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cf-metricscollected.html\">AWS Cloudfront documentation</a><br/>\n<a style=\"float: left\"  target=\"_blank\" href=\"https://grafana.com/dashboards/674\">Installed from Grafana.com dashboards</a>\n<div style=\"clear:both; width:100%;height:0;font-size:0;\"></div>",
           "editable": true,
           "error": false,
           "id": 2,
@@ -521,29 +521,11 @@
         "datasource": "${DS_CLOUDWATCH}",
         "hide": 0,
         "includeAll": false,
-        "label": "Region",
-        "multi": false,
-        "name": "region",
-        "options": [],
-        "query": "regions()",
-        "refresh": 1,
-        "regex": "",
-        "sort": 0,
-        "tagValuesQuery": null,
-        "tagsQuery": null,
-        "type": "query"
-      },
-      {
-        "allValue": null,
-        "current": {},
-        "datasource": "${DS_CLOUDWATCH}",
-        "hide": 0,
-        "includeAll": false,
         "label": "DistributionId",
         "multi": false,
         "name": "distributionid",
         "options": [],
-        "query": "dimension_values($region, AWS/CloudFront, Requests, DistributionId)",
+        "query": "dimension_values(us-east-1, AWS/CloudFront, Requests, DistributionId)",
         "refresh": 1,
         "regex": "",
         "sort": 0,
